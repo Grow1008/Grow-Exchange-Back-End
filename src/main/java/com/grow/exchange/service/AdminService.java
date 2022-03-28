@@ -28,14 +28,35 @@ public class AdminService {
 		
 		UserEntity user=userRepo.findUserByUserId(cointrns.getUserId());
 		if(user!=null) {
+			UserEntity admin=userRepo.findUserByUserId(user.getAdminId());			
 			String currentDate;
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			   LocalDateTime now = LocalDateTime.now();
 			   currentDate=dtf.format(now);
 			user.setUserCoin(cointrns.getUpdatedCoin());
-			userRepo.save(user);	
+			userRepo.save(user);
 			cointrns.setTrnsDate(currentDate);
 			coinTransRepo.save(cointrns);
+			if(admin!=null) {
+			
+			// add transaction details for admin 
+				CoinTransactionLog adminCoinTrn = new CoinTransactionLog();
+				adminCoinTrn.setPreCoin(admin.getUserCoin());
+				adminCoinTrn.setEventName(Integer.parseInt(cointrns.getReqCoin())>=0?"Redeem":"Add");
+				adminCoinTrn.setReqCoin(Integer.parseInt(cointrns.getReqCoin())>=0?cointrns.getReqCoin().replace("+","-"):cointrns.getReqCoin().replace("-","+"));
+				adminCoinTrn.setUserId(admin.getUserId());
+				adminCoinTrn.setTrnsDate(currentDate);
+			
+			int prvCoin=Integer.parseInt(admin.getUserCoin());
+			int reqcoin=Integer.parseInt(adminCoinTrn.getReqCoin());
+			int updatedCoin=prvCoin+reqcoin;
+			admin.setUserCoin(String.valueOf(updatedCoin));
+			adminCoinTrn.setUpdatedCoin(String.valueOf(updatedCoin));
+			userRepo.save(admin);
+			
+			coinTransRepo.save(adminCoinTrn);
+			// end
+			}
 			return "User Coin Updated Sucessfully";
 		}
 		else {

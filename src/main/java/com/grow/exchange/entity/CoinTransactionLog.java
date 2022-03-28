@@ -20,11 +20,11 @@ public class CoinTransactionLog {
 	@Column(name = "user_id")
 	private String userId ;
 	@Column(name="pre_coin")
-	private String preCoin;
+	private int preCoin;
 	@Column(name="req_coin")
-	private String reqCoin;
+	private int reqCoin;
 	@Column(name="updated_coin")
-	private String updatedCoin;
+	private int updatedCoin;
 	@Column(name="event_name")
 	private String eventName;
 	
@@ -32,8 +32,8 @@ public class CoinTransactionLog {
 		super();
 	}
 
-	public CoinTransactionLog(Long trnId, String trnsDate, String userId, String preCoin, String reqCoin,
-			String updatedCoin, String eventName) {
+	public CoinTransactionLog(Long trnId, String trnsDate, String userId, int preCoin, int reqCoin,
+			int updatedCoin, String eventName) {
 		super();
 		this.trnId = trnId;
 		this.trnsDate = trnsDate;
@@ -68,27 +68,27 @@ public class CoinTransactionLog {
 		this.userId = userId;
 	}
 
-	public String getPreCoin() {
+	public int getPreCoin() {
 		return preCoin;
 	}
 
-	public void setPreCoin(String preCoin) {
+	public void setPreCoin(int preCoin) {
 		this.preCoin = preCoin;
 	}
 
-	public String getReqCoin() {
+	public int getReqCoin() {
 		return reqCoin;
 	}
 
-	public void setReqCoin(String reqCoin) {
+	public void setReqCoin(int reqCoin) {
 		this.reqCoin = reqCoin;
 	}
 
-	public String getUpdatedCoin() {
+	public int getUpdatedCoin() {
 		return updatedCoin;
 	}
 
-	public void setUpdatedCoin(String updatedCoin) {
+	public void setUpdatedCoin(int updatedCoin) {
 		this.updatedCoin = updatedCoin;
 	}
 

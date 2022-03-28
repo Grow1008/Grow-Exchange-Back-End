@@ -37,21 +37,29 @@ public class AdminService {
 			userRepo.save(user);
 			cointrns.setTrnsDate(currentDate);
 			coinTransRepo.save(cointrns);
-			if(admin!=null) {
+			if(admin!=null && cointrns.getEventName().equals("Add")) {
 			
 			// add transaction details for admin 
 				CoinTransactionLog adminCoinTrn = new CoinTransactionLog();
 				adminCoinTrn.setPreCoin(admin.getUserCoin());
-				adminCoinTrn.setEventName(Integer.parseInt(cointrns.getReqCoin())>=0?"Redeem":"Add");
-				adminCoinTrn.setReqCoin(Integer.parseInt(cointrns.getReqCoin())>=0?cointrns.getReqCoin().replace("+","-"):cointrns.getReqCoin().replace("-","+"));
+//				adminCoinTrn.setEventName(Integer.parseInt(cointrns.getReqCoin())>=0?"Redeem":"Add");
+//				adminCoinTrn.setReqCoin(Integer.parseInt(cointrns.getReqCoin())>=0?cointrns.getReqCoin().replace("+","-"):cointrns.getReqCoin().replace("-","+"));
+				adminCoinTrn.setEventName(cointrns.getEventName().equals("Add")?"Redeem":"Add");
+				adminCoinTrn.setReqCoin(cointrns.getReqCoin());
+				
 				adminCoinTrn.setUserId(admin.getUserId());
 				adminCoinTrn.setTrnsDate(currentDate);
-			
-			int prvCoin=Integer.parseInt(admin.getUserCoin());
-			int reqcoin=Integer.parseInt(adminCoinTrn.getReqCoin());
-			int updatedCoin=prvCoin+reqcoin;
-			admin.setUserCoin(String.valueOf(updatedCoin));
-			adminCoinTrn.setUpdatedCoin(String.valueOf(updatedCoin));
+				int updatedCoin;
+			int prvCoin=admin.getUserCoin();
+			int reqcoin=adminCoinTrn.getReqCoin();
+			if(adminCoinTrn.getEventName().equals("Add")) {
+				updatedCoin=prvCoin+reqcoin;
+			}
+			else {
+				updatedCoin=prvCoin-reqcoin;
+			}
+			admin.setUserCoin(updatedCoin);
+			adminCoinTrn.setUpdatedCoin(updatedCoin);
 			userRepo.save(admin);
 			
 			coinTransRepo.save(adminCoinTrn);

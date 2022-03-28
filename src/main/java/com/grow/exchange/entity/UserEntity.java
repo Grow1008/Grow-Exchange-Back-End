@@ -28,7 +28,7 @@ public class UserEntity {
 	@Column(name = "user_password")
 	private String userPassword;
 	@Column(name = "user_coin")
-	private String userCoin;
+	private int userCoin;
 	@Column(name = "created_on")
 	private String createdOn;
 	@Column(name = "is_active")
@@ -40,7 +40,7 @@ public class UserEntity {
 	
 
 	public UserEntity(Long id, String userId, String userName, String userRole, String adminId, String userPassword,
-			String userCoin, String createdOn, boolean isActive, boolean isLoggedIn, String mobile) {
+			int userCoin, String createdOn, boolean isActive, boolean isLoggedIn, String mobile) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -100,10 +100,10 @@ public class UserEntity {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public String getUserCoin() {
+	public int getUserCoin() {
 		return userCoin;
 	}
-	public void setUserCoin(String userCoin) {
+	public void setUserCoin(int userCoin) {
 		this.userCoin = userCoin;
 	}
 	public String getCreatedOn() {

@@ -37,7 +37,8 @@ public class AdminService {
 			userRepo.save(user);
 			cointrns.setTrnsDate(currentDate);
 			coinTransRepo.save(cointrns);
-			if(admin!=null && cointrns.getEventName().equals("Add")) {
+//			if(admin!=null && cointrns.getEventName().equals("Add")) {
+				if(admin!=null) {
 			
 			// add transaction details for admin 
 				CoinTransactionLog adminCoinTrn = new CoinTransactionLog();
